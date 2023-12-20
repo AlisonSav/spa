@@ -1,0 +1,32 @@
+{% extends 'spa/base.html' %}
+{#{% load crispy_forms_tags %}#}
+{#{% load crispy_forms_filters %}#}
+
+{% block title %} Index {% endblock title %}
+{% load static %}
+{% block css_additional %}
+    <link rel="stylesheet" href="{% static 'spa/style.css' %}">
+{% endblock css_additional %}
+{% block content %}
+    <form action="{% url 'spa:review_create' %}" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+{#            {% crispy form %}#}
+        {% for field in form %}
+            <div class="form-group{% if field.errors %} has-error{% endif %}">
+                <label>{{ field.label }}</label>
+            {{ field }}
+                    {% if field.errors %}
+                        {% for error in field.errors %}
+                            <div class="invalid-feedback">
+                                {{ error }}
+                            </div>
+                        {% endfor %}
+
+                    {% endif %}
+            </div>
+        {% endfor %}
+        <br>
+        <input class="btn btn-success" type="submit" value="Create!">
+    </form>
+    {% include 'includes/return_index.html' %}
+{% endblock content %}

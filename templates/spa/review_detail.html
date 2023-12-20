@@ -1,0 +1,50 @@
+{% extends 'spa/base.html' %}
+{% block title %} {% endblock title %}
+{% load static %}
+{% block css_additional %}
+    <link rel="stylesheet" href="{% static 'spa/style.css' %}">
+{% endblock css_additional %}
+{% block content %}
+    <form action="{% url 'spa:review_detail' review.id %}" method="GET" enctype="multipart/form-data">
+        {% csrf_token %}
+        <fieldset>
+            <h3>{{ review }}</h3>
+            {% if object.file %}
+                <img class="img-fluid" src="{{ object.avatar.url }}" alt="Card image">
+            {% endif %}
+            <legend><h2>Review Comments: </h2></legend>
+            {% for comment in review.comment_set.all %}
+                <div class="comment">
+                    <ul>
+                        <li>{{ comment.comment_text }} - {{ comment.author.username }}
+                            - {{ comment.created_on|date:"F j, Y" }}</li>
+                        <ul>
+                            {% for com in comment.comment_set.all %}
+                                <li>{{ com.comment_text }} - {{ com.author.username }}
+                                    - {{ com.created_on|date:"F j, Y" }}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </ul>
+                </div>
+            {% endfor %}
+            <br>
+            <br>
+            <button class="btn btn-outline-success"><a href="{% url 'spa:comment_create' review.id %}">Create
+                comment</a></button>
+            <br>
+            <br>
+            {% if post.author == request.user or request.user.is_superuser %}
+                <div>
+                    <button class="btn btn-success"><a href="{% url 'spa:review_update' review.id %}">Update Review</a>
+                    </button>
+                    <button class="btn btn-danger"><a href="{% url 'spa:review_delete' review.id %}">Delete Review</a>
+                    </button>
+                </div>
+            {% endif %}
+
+        </fieldset>
+    </form>
+    {% include 'includes/return_index.html' %}
+
+{% endblock content %}

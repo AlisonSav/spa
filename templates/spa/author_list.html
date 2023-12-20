@@ -1,0 +1,39 @@
+{% extends 'spa/base.html' %}
+
+
+{% block title %} Index {% endblock title %}
+{% load static %}
+{% block css_additional %}
+    <link rel="stylesheet" href="{% static 'spa/style.css' %}">
+{% endblock css_additional %}
+{% block content %}
+    <form action="{% url 'spa:author_list' %}" method="GET">
+        {% csrf_token %}
+        <fieldset>
+            <h1 class="page-header">All Users</h1>
+
+            <table class="table" id="book-table">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>User</th>
+                    <th>Email</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% include 'includes/author_list.html' %}
+                </tbody>
+            </table>
+
+            <div class="modal fade" id="modal-book">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+    {% include 'includes/return_index.html' %}
+{% endblock content %}

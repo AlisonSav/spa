@@ -1,0 +1,20 @@
+{% extends 'spa/base.html' %}
+
+
+{% block title %} Index {% endblock title %}
+{% load static %}
+{% block css_additional %}
+    <link rel="stylesheet" href="{% static 'spa/style.css' %}">
+{% endblock css_additional %}
+{% block content %}
+    <form action="{% url 'spa:comment_create' review.id %}" method="POST">
+        {% csrf_token %}
+        <fieldset>
+            <legend><h3>Create Comment: </h3></legend>
+            {{ form.as_p }}
+            <input type="submit" value="Create!">
+        </fieldset>
+    </form>
+    <a href="{% url 'spa:index' %}">Return to Post list</a>
+    {% include 'includes/return_index.html' %}
+{% endblock content %}

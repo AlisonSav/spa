@@ -1,0 +1,45 @@
+{% extends 'spa/base.html' %}
+
+{% block content %}
+    <form action="{% url 'spa:contact_us' %}" method="POST" class="js-contact-form">
+        {% csrf_token %}
+        <h2 align="center">You can write us</h2>
+        <div class="text-center">
+            <button type="button" class="btn btn-danger " data-toggle="modal" data-target="#myModal">
+                Open contact form
+            </button>
+        </div>
+
+        <!-- The Modal -->
+        <div class="container">
+
+            <div class="modal" id="myModal">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+
+                        <!-- Modal Header -->
+                        <div class="modal-header">
+                            <h4 class="modal-title">Modal Heading</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+
+                        <!-- Modal body -->
+                        <div class="modal-body">
+                            {% include 'spa/partial_contact_form.html' %}
+                        </div>
+
+                        <!-- Modal footer -->
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-success" >Go!</button>
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </form>
+{% endblock content %}

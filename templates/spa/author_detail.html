@@ -1,0 +1,26 @@
+{% extends 'spa/base.html' %}
+{% block title %} {% endblock title %}
+{% load static %}
+{% block css_additional %}
+    <link rel="stylesheet" href="{% static 'spa/style.css' %}">
+{% endblock css_additional %}
+{% block content %}
+    <form action="{% url 'spa:author_detail' author.id %}" method="GET" enctype="multipart/form-data">
+        {% csrf_token %}
+        <fieldset>
+            <div class="card" style="width:300px">
+                <h3 class="card-title" align="center">Author Information: </h3>
+                {% if object.avatar %}
+                    <img class="img-fluid" src="{{ object.avatar.url }}" alt="Card image">
+                {% endif %}
+                <div class="card-body">
+                    <h4 class="card-title">{{ object.username }}</h4>
+                    <p class="card-text"><b>Email:</b> {{ object.email }}</p>
+                    <p class="card-text"><b>First name:</b> {{ object.first_name }}</p>
+                    <p class="card-text"><b>Last name:</b> {{ object.last_name }}</p>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+    {% include 'includes/return_index.html' %}
+{% endblock content %}

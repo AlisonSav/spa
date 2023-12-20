@@ -1,0 +1,11 @@
+{% for a in author %}
+    <tr>
+        <td>{{ a.id }}</td>
+        <td><a href="{% url 'spa:author_detail' a.id %}">{{ a.username }}</a></td>
+        <td>{{ a.email }}</td>
+        <td>{{ a.about }}</td>
+        {% empty %}
+    <tr>
+        <td colspan="8" class="text-center bg-warning">No Authors</td>
+    </tr>
+{% endfor %}

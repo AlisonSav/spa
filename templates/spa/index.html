@@ -1,0 +1,29 @@
+{% extends 'spa/base.html' %}
+
+
+{% block title %} Index {% endblock title %}
+{% load static %}
+{% block css_additional %}
+        <link rel="stylesheet" href="{% static 'spa/style.css' %}">
+{% endblock css_additional %}
+{% block content %}
+      <legend><h2>Last Reviews: </h2></legend>
+    {% for review in reviews %}
+    <div class="review">
+        <p><a href="{% url 'spa:review_detail' review.id %}">{{ review.text }}</a> - {{ review.author.username }} - {{ review.created_on|date:"F j, Y" }}</p>
+        {% for comment in review.comment_set.all %}
+            <div class="comment">
+            <ul>
+                <li>{{ comment.comment_text }} - {{ comment.author}} - {{ comment.created_on|date:"F j, Y" }} </li>
+                    <ul>
+                        {% for com in comment.comment_set.all %}
+                            <li>{{ com.comment_text }} - {{ com.author}} - {{ com.created_on|date:"F j, Y" }}
+                            </li>
+                        {% endfor %}
+                    </ul>
+            </ul>
+            </div>
+        {% endfor %}
+    </div>
+{% endfor %}
+{% endblock content %}

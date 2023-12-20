@@ -1,0 +1,16 @@
+{% extends 'spa/base.html' %}
+
+
+{% block title %} Index {% endblock title %}
+{% load static %}
+{% block css_additional %}
+    <link rel="stylesheet" href="{% static 'spa/style.css' %}">
+{% endblock css_additional %}
+{% block content %}
+    <form method="post" action="{% url 'logout' %}">
+        {% csrf_token %}
+        <p>Logged out!</p>
+
+        <a href="{% url 'spa:login' %}">Click here to login again.</a>
+    </form>
+{% endblock %}
